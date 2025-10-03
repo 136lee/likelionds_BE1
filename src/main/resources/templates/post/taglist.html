@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'#' + ${tagName} + ' 태그 글 목록'">태그 글 목록</title>
+</head>
+<body>
+<p><a th:href="@{/member/welcome}">홈으로</a></p>
+
+<h1 th:text="'#' + ${tagName} + ' 태그 글 목록'">태그 글 목록</h1>
+<p><a th:href="@{/posts}">전체 목록으로</a></p>
+
+<table>
+    <tr>
+        <th>No.</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일</th>
+        <th>보기</th>
+    </tr>
+    <tr th:if="${#lists.isEmpty(posts)}">
+        <td colspan="5">해당 태그의 글이 없습니다.</td>
+    </tr>
+    <tr th:each="p, stat : ${posts}">
+        <td th:text="${stat.count}">1</td>
+        <td th:text="${p.title}">제목</td>
+        <td th:text="${p.user != null ? p.user.nickname : '익명'}">작성자</td>
+        <td th:text="${#temporals.format(p.createdAt, 'yyyy-MM-dd HH:mm')}">날짜</td>
+        <td><a th:href="@{|/posts/${p.id}|}">상세보기</a></td>
+    </tr>
+</table>
+</body>
+</html>

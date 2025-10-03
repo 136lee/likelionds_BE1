@@ -2,18 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>환영합니다</title>
+    <title>BLOG</title>
 </head>
 <body>
-<p><a th:href="@{/}">홈</a></p>
-<h1>환영합니다!</h1>
+<h1>BLOG</h1>
 
 <!-- 로그인 성공 시, username 변수를 출력 -->
 <p th:text="'안녕하세요, ' + ${nickname} + ' 님!'"></p>
 
 <p><a th:href="@{/posts}">게시물 목록</a></p>
 <p><a th:href="@{/posts/create}">글 작성</a></p>
-
+<p><a th:href="@{/member/mypage}">마이페이지</a></p>
 
 <!-- 로그아웃 대신 다시 로그인 페이지로 이동 -->
 <p><a th:href="@{/member/login}">로그아웃</a></p>

@@ -1,7 +1,7 @@
 package com.example.likelionds_BE1.domain.member.member.controller;
 
-import com.example.likelionds_BE1.domain.member.member.service.MemberService;
 import com.example.likelionds_BE1.domain.member.member.service.CustomUserDetails;
+import com.example.likelionds_BE1.domain.member.member.service.MemberService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

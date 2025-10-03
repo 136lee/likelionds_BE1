@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>좋아요 목록</title>
+</head>
+<body>
+<p><a th:href="@{/member/welcome}">홈으로</a></p>
+<p><a th:href="@{/member/mypage}">마이페이지로</a></p>
+
+<h1>내 좋아요</h1>
+<p>총 <span th:text="${likeCount}">0</span>개</p>
+
+<table>
+    <tr>
+        <th>No.</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>보기</th>
+    </tr>
+    <tr th:each="l, s : ${likes}">
+        <td th:text="${s.index + 1}">1</td>
+        <td th:text="${l.post.title}">제목</td>
+        <td th:text="${l.post.user != null ? l.post.user.nickname : '알수없음'}">작성자</td>
+        <td><a th:href="@{|/posts/${l.post.id}|}">상세보기</a></td>
+    </tr>
+    <tr th:if="${#lists.isEmpty(likes)}">
+        <td colspan="5">좋아요한 글이 아직 없습니다.</td>
+    </tr>
+</table>
+
+</body>
+</html>

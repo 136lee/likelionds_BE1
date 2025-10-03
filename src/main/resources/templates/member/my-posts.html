@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>내가 쓴 글</title>
+</head>
+<body>
+<p><a th:href="@{/member/welcome}">홈으로</a></p>
+<p><a th:href="@{/member/mypage}">마이페이지로</a></p>
+
+<h1>내가 쓴 글</h1>
+<p>총 <span th:text="${postCount}">0</span>개</p>
+
+<table>
+    <tr>
+        <th>No.</th>
+        <th>제목</th>
+        <th>작성일</th>
+        <th>보기</th>
+    </tr>
+    <tr th:each="post, s : ${posts}">
+        <td th:text="${s.count}">1</td>
+        <td th:text="${post.title}"></td>
+        <td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+        <td><a th:href="@{/posts/{id}(id=${post.id})}">상세보기</a></td>
+    </tr>
+    <tr th:if="${#lists.isEmpty(posts)}">
+        <td colspan="4">작성한 글이 없습니다.</td>
+    </tr>
+</table>
+</body>
+</html>

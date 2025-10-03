@@ -5,23 +5,25 @@
     <title>게시물 목록</title>
 </head>
 <body>
+<p><a th:href="@{/member/welcome}">홈으로</a></p>
+
 <h1>게시물 목록</h1>
 
 <p><a th:href="@{/posts/create}">글 작성</a></p>
 
 <table>
     <tr>
-        <th>ID</th>
+        <th>No.</th>
         <th>제목</th>
         <th>작성자</th>
         <th>작성일</th>
         <th>보기</th>
     </tr>
-    <tr th:each="post : ${posts}">
-        <td th:text="${post.id}"></td>
-        <td th:text="${post.title}"></td>
-        <td th:text="${post.user.nickname}"></td>
-        <td th:text="${post.createdAt}"></td>
+    <tr th:each="post, stat : ${posts}">
+        <td th:text="${stat.count}">1</td>
+        <td th:text="${post.title}">제목</td>
+        <td th:text="${post.user?.nickname}">작성자</td>
+        <td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">2025-10-02 20:08</td>
         <td><a th:href="@{/posts/{id}(id=${post.id})}">상세보기</a></td>
     </tr>
 </table>

@@ -5,14 +5,50 @@
     <title>글 작성</title>
 </head>
 <body>
+<p><a th:href="@{/member/welcome}">홈으로</a></p>
+
 <h1>글 작성</h1>
 
 <form th:action="@{/posts}" method="post">
+    <!-- CSRF -->
+    <input th:if="${_csrf != null}" type="hidden"
+           th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
     <p>제목: <input type="text" name="title" th:value="${post.title}"/></p>
     <p>내용: <textarea name="content" th:text="${post.content}"></textarea></p>
+
+    <div id="tagBox">
+        <div class="tag-row">
+            <input type="text" name="tagNames" placeholder="태그 입력(예: spring)"/>
+            <a href="#" onclick="removeTagInput(event)">삭제</a>
+        </div>
+    </div>
+    <p><a href="#" onclick="addTagInput(event)">+ 태그 입력 추가</a></p>
+
+    <input th:if="${_csrf != null}" type="hidden"
+           th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
     <p><button type="submit">작성</button></p>
 </form>
 
 <p><a th:href="@{/posts}">목록으로 돌아가기</a></p>
+
+<script>
+    function addTagInput(e){
+      e.preventDefault();
+      const box = document.getElementById('tagBox');
+      const row = document.createElement('div');
+      row.className = 'tag-row';
+      row.innerHTML =
+        '<input type="text" name="tagNames" placeholder="태그 입력(예: spring)"/>' +
+        '<a href="#" onclick="removeTagInput(event)">삭제</a>';
+      box.appendChild(row);
+    }
+    function removeTagInput(e){
+      e.preventDefault();
+      const row = e.target.closest('.tag-row');
+      if(row) row.remove();
+    }
+</script>
 </body>
 </html>

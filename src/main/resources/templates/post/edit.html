@@ -5,14 +5,59 @@
     <title>글 수정</title>
 </head>
 <body>
+<p><a th:href="@{/member/welcome}">홈으로</a></p>
+
 <h1>글 수정</h1>
 
 <form th:action="@{/posts/{id}/edit(id=${post.id})}" method="post">
+    <!-- CSRF -->
+    <input th:if="${_csrf != null}" type="hidden"
+           th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
     <p>제목: <input type="text" name="title" th:value="${post.title}"/></p>
     <p>내용: <textarea name="content" th:text="${post.content}"></textarea></p>
-    <p><button type="submit">수정</button></p>
+
+    <div style="margin-top:12px;">
+        <b>태그</b>
+
+        <div id="tagBox" style="margin-top:6px;">
+            <!-- 기존 태그들 → 각각 name="tags" 로 전송됨 -->
+            <div class="tag-row" th:each="t : ${post.tags}">
+                <input type="text" name="tags" th:value="${t.name}">
+                <a href="#" onclick="removeTagRow(this);return false;">삭제</a>
+            </div>
+
+            <!-- 빈 입력 1개 기본 제공 -->
+            <div class="tag-row">
+                <input type="text" name="tags" placeholder="태그 입력(예: spring)">
+                <a href="#" onclick="removeTagRow(this);return false;">삭제</a>
+            </div>
+        </div>
+
+        <p><a href="#" onclick="addTagRow();return false;">+ 태그 입력 추가</a></p>
+    </div>
+
+    <p style="margin-top:16px;">
+        <button type="submit">수정</button>
+    </p>
 </form>
 
 <p><a th:href="@{/posts/{id}(id=${post.id})}">상세 페이지로 돌아가기</a></p>
+
+<script>
+    function addTagRow() {
+      const box = document.getElementById('tagBox');
+      const row = document.createElement('div');
+      row.className = 'tag-row';
+      row.innerHTML =
+        '<input type="text" name="tags" placeholder="태그 입력(예: spring)">' +
+        '<a href="#" onclick="removeTagRow(this);return false;">삭제</a>';
+      box.appendChild(row);
+    }
+    function removeTagRow(anchor) {
+      const row = anchor.closest('.tag-row');
+      row?.remove();
+    }
+</script>
 </body>
 </html>

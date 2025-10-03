@@ -30,7 +30,7 @@ public class MemberPageController {
         Long meId = currentUserId();
         model.addAttribute("posts", postService.findMyPosts(meId));
         model.addAttribute("postCount", postService.countMyPosts(meId));
-        return "member/my-posts"; // ← 템플릿 파일명과 정확히 맞춘다
+        return "member/my-posts";
     }
 
     @GetMapping("/likes")
@@ -38,7 +38,7 @@ public class MemberPageController {
         Long meId = currentUserId();
         model.addAttribute("likes", likeService.findMyLikes(meId));
         model.addAttribute("likeCount", likeService.countMyLikes(meId));
-        return "member/my-likes"; // ← 파일명을 my-likes.html 로 쓰는 경우
+        return "member/my-likes";
     }
 
     private Long currentUserId() {

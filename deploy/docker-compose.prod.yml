@@ -10,7 +10,7 @@ services:
       - dsBEStudy1-mysql
     restart: unless-stopped
 
-  projectname-mysql:
+  dsBEStudy1-mysql:
     image: mysql:8.0.43
     container_name: dsBEStudy1-mysql
     env_file:

@@ -1,0 +1,7 @@
+.gradle
+build
+.git
+.gitignore
+.DS_Store
+node_modules
+_vol/mysql/mysql.sock

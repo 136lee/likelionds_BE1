@@ -3,7 +3,7 @@ spring:
     ansi:
       enabled: ALWAYS
   datasource:
-    url: jdbc:mysql://localhost:3306/dsBEStudy1_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=utf8
+    url: jdbc:mysql://dsBEStudy1-mysql:3306/dsBEStudy1_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=utf8
     username: likelionds_BE1
     password: dsBEStudy1_pw
   jpa:

@@ -2,15 +2,20 @@
 FROM eclipse-temurin:21-jdk AS build
 WORKDIR /app
 
-# Gradle 캐시 최적화: 래퍼/설정 먼저 복사 → 의존성 캐시
-COPY gradlew gradlew
-COPY gradle gradle
+# Gradle 캐시 최적화
+COPY gradlew ./
+COPY gradle gradle/
 COPY build.gradle settings.gradle ./
-RUN chmod +x gradlew
+
+# 권한 부여 및 줄바꿈 수정
+RUN chmod +x gradlew && \
+    sed -i 's/\r$//' gradlew
+
+# 의존성 다운로드
 RUN ./gradlew dependencies --no-daemon || true
 
 # 소스 전체 복사 후 빌드
-COPY . .
+COPY src src/
 RUN ./gradlew clean bootJar --no-daemon
 
 # ===== 2) RUNTIME STAGE =====
@@ -19,11 +24,8 @@ ENV TZ=Asia/Seoul \
     JAVA_OPTS="-XX:+UseG1GC -XX:MaxRAMPercentage=75 -Duser.timezone=Asia/Seoul"
 WORKDIR /opt/app
 
-# 빌드 산출물만 복사
 COPY --from=build /app/build/libs/*.jar app.jar
 
 EXPOSE 8080
-# (Actuator 없으면 HEALTHCHECK는 없어도 OK)
-# HEALTHCHECK --interval=30s --timeout=3s --retries=3 CMD curl -f http://localhost:8080/actuator/health || exit 1
 
 ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
